@@ -106,9 +106,10 @@ mouse.resize.add_enter_callback(function(c, args) --luacheck: no unused args
     if l.mouse_resize_handler then
         capi.mousegrabber.stop()
 
-        local geo, corner = aplace.closest_corner(capi.mouse, {parent=c})
+        local geo, corner = aplace.closest_corner(
+        function() return {x = c.x +c.width, c.y+c.height} end, {parent=c})
 
-        l.mouse_resize_handler(c, corner, geo.x, geo.y)
+        l.mouse_resize_handler(c, "bottom_right", geo.x, geo.y)
 
         return false
     end
